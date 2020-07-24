@@ -1,0 +1,38 @@
+//二进制分组
+#include<bits/stdc++.h>
+using namespace std;
+int a[10001];
+bool v[100001];
+main()
+{
+    int n,m,sum=0,ans=0;
+    cin>>m>>n;
+    int x[m+1],y[m+1];
+	for(int i=1;i<=m;i++)
+		scanf("%d",&y[i]);
+	for(int i=1;i<=m;i++)
+		scanf("%d",&x[i]);
+    for(int i=1;i<=m;i++)
+	{
+		int t=1;
+		while(x[i]>t) 
+		 //将每张钱有多少张即t进行二进制拆分,例如将9分成1,2,4,2 
+		{
+			a[++sum]=t*y[i];
+			x[i]-=t;
+			t*=2;
+		}
+		a[++sum]=x[i]*y[i];
+	}
+//	for(int i=1;i<=sum;i++)
+//	cout<<a[i]<<endl;
+    v[0]=true;
+    for(int i=1;i<=sum;i++)//枚举钱有多少张 
+        for(int j=n-a[i];j>=0;j--)//枚举上一维的状态，这两个循环反过来也没事 
+      		if(v[j])
+      			v[j+a[i]]=true;
+    for(int i=n;i>=1;i--)//统计答案 
+	    if(v[i]==true)
+			ans++;
+	cout<<ans<<endl;
+}
