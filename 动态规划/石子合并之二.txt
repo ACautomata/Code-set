@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+int n;
+int a[1005],dp[1005][1005], sum[1005][1005];
+int minn=0x3f3f3f3f,maxn=0;
+int main(){
+    cin >>n;
+    for(int i=1;i<=n;i++){
+        cin >> a[i];
+        a[n+i]=a[i];
+    }
+    for(int i=1;i<=2*n;i++){
+    	for(int j=i;j<=2*n;j++){
+    		for(int k=i;k<=j;k++){
+        	sum[i][j]+=a[k];
+    		}
+		}
+	}
+    for(int i=1;i<=n;i++){
+        dp[i][i]=0;
+    }
+    for(int len=1;len<n;len++){
+    	for(int l=1,r=l+len;r<n*2&&l<n*2;l++,r=l+len){
+        dp[l][r]=0x3f3f3f3f;
+        	for(int k=l;k<r;k++){
+            	dp[l][r]=min(dp[l][r],dp[l][k]+dp[k+1][r]+sum[l][r]);
+        	}
+    	}
+	}
+    
+    for(int i=1;i<=n;i++){
+    	minn=min(minn,dp[i][i+n-1]);
+	}
+    cout << minn <<endl;
+    return 0;
+}
