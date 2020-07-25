@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+int cash,n;
+int dp[1010000],cost[15],num[15];
+void jun(int t){
+	for(int i = cash; i >=t; i --)
+		dp[i] = max(dp[i],dp[i-t]+t);
+} 
+void cme(int t){
+	for(int i = t;i <= cash; i ++)
+		dp[i] = max(dp[i],dp[i-t]+t);
+}
+void cashibag(){
+	int k = 1;
+	int count = 0;
+	for(int i = 1; i <= n; i ++)
+	{
+		if(cost[i]>cash)
+			continue;
+		if(num[i]*cost[i]>=cash)
+			cme(cost[i]);
+		else{
+			k = 1;
+			count = num[i];
+			while(k<count){
+				jun(k*cost[i]);
+				count -= k;
+				k *= 2;
+			}
+			jun(count*cost[i]);
+		}
+	}
+}
+int main(){
+	cin >>cash;
+		cin >>n;
+		memset(num,0,sizeof(num));
+		memset(cost,0,sizeof(cost));
+		memset(dp,0,sizeof(dp));
+		for(int i = 1; i <= n; i++)
+			cin >> num[i] >> cost[i];
+		cashibag();
+		cout<< dp[cash];
+	
+	return 0;
+}
