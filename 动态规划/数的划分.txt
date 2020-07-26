@@ -1,0 +1,16 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+int n, m, f[1010][1010];
+int main(){
+	cin >> n >>m;;
+	f[1][1] = 1;
+	for(int i = 1; i <= m; i++)
+		for(int j=i; j <= n; j++){
+			if(j + i <= n)
+				f[i][j+i] += f[i][j]; 
+			f[i+1][j+1] += f[i][j];   
+		}
+	cout << f[m][n];
+	return 0;
+}
