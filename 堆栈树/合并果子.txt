@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long n,ans,a[100010];
+int main(){
+    cin >> n;
+    for(int i= 1; i <= n; i++){
+        cin >> a[i];
+         
+        int j = i-1;
+        while(a[j] > a[i] && j >= 1) j--;
+        
+        int tmp = a[i];
+        for(int k = i-1; k >= j+1; k--)
+            a[k+1] = a[k];
+        a[j+1] = tmp;
+    }
+    
+    for(int i=1;i<n;i++){
+        int tmp = a[i]+a[i+1];
+        ans += tmp;
+        
+        int j = i+2;
+        while(tmp >= a[j] && j <= n) j++;
+        
+        for(int k = i+2; k <= j-1; k++)
+            a[k-1] = a[k];
+        a[j-1] = tmp;
+    }
+    cout << ans << endl;
+    return 0;
+}

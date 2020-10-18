@@ -1,0 +1,53 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+const int maxn = 200100;
+const int maxm = 100100;
+struct node{
+	int u,v;
+	int s;
+}e[maxm];
+
+bool cmp(node a,node b){
+	return a.s>b.s;
+}
+
+int fa[maxn*2];
+int n,m;
+void init(){
+	for(int i=1;i<=2*n;i++){
+		fa[i] = i;
+	}
+}
+
+int get(int x){
+	if(fa[x]!=x) fa[x]=get(fa[x]);
+	return fa[x];
+}
+
+void merge(int x,int y)
+{
+    fa[get(x)] = get(y);
+}
+int main(){
+	cin >> n >> m;
+		init();
+    	for(int i=1;i<=m;i++){
+    		cin >> e[i].u >> e[i].v >> e[i].s;
+		}
+	sort(e+1,e+m+1,cmp);
+
+for(int i=1;i<=m;i++){
+	if(get(e[i].u)==get(e[i].v)){
+	   
+		cout << e[i].s;
+		return 0;
+	}else{
+		merge(e[i].u,e[i].v+n);
+		merge(e[i].u+n,e[i].v);
+		
+    } 
+}
+	cout << "0";
+	return 0;
+}

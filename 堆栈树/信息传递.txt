@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+int to[1001010],vis[1010100], idv[1010010];
+int n,ans,temp,j;
+queue <int> q;
+ 
+void topu(){
+     for (int i = 1; i <= n; i++)
+        if (idv[i] == 0){
+            q.push(i);
+            vis[i] = 1;
+        }
+    while (!q.empty()){
+        int u = q.front();
+        q.pop();
+        --idv[to[u]];
+        if (idv[to[u]] == 0) {
+            vis[to[u]] = 1;
+            q.push(to[u]);
+        }  
+    }
+    for (int i = 1; i <= n; i++){ 
+        if (!vis[i] && idv[i] != 0){
+            vis[i] = 1;
+            temp = 1;
+            j = to[i];
+            while (!vis[j]){ 
+                vis[j] = 1;
+                j = to[j];
+                temp++;
+            }
+            ans = min(ans,temp);
+        }
+    }
+}
+ 
+int main(){
+    cin >> n;
+    ans = n;
+    for (int i = 1; i <= n; i++){
+        cin >> to[i];
+        ++idv[to[i]];
+    }
+   topu();
+    cout << ans;
+    return 0;
+}
