@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int maxn = 1010;
+struct node{
+int to,nxt;
+}e[2010];
+int cnt,head[1010];
+int temp[maxn],w[maxn];
+void add(int u,int v){
+cnt++;
+e[cnt].nxt=head[u];
+head[u]=cnt;
+e[cnt].to=v;
+}
+void dfs(int u,int root){
+temp[u]=w[u];
+for(int i=head[u]; i; i=e[i].nxt)
+if(e[i].to!=root)
+{
+dfs(e[i].to,u);
+if(temp[e[i].to]>0)
+temp[u]+=temp[e[i].to];
+}
+}
+int n;
+int x[maxn],y[maxn];
+int main(){
+cin >> n;
+for(int i=1;i<=n;i++){
+cin >> x[i] >> y [i] >>w[i];
+}
+for(int i=1;i <= n;i++){
+for(int j=i+1;j<=n;j++){
+if(abs(x[i]-x[j])+abs(y[i]-y[j])==1){
+add(i,j);
+add(j,i);
+}
+}
+}
+int ans = 0;
+for(int i=1;i<=n;i++){
+dfs(i,0);
+ans = max(ans,temp[i]);
+}
+cout << ans ;
+return 0;
+}
