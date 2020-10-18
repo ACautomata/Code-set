@@ -1,0 +1,15 @@
+#include<bits/stdc++.h>
+using namespace std;
+int a,n,m,x;
+int ans[1010100],sum[1010110];
+int main(){
+	cin >> a >>n>>m>>x;
+	ans[2]=1;ans[3]=2;
+	for(int i=4;i<=n;i++){
+		ans[i] = ans[i-1]+ans[i-2]-1;
+		sum[i] = sum[i-1]+sum[i-2]+1;
+	}
+	int num=(m-a*ans[n-1])/sum[n-1];
+	cout << a*ans[x]+num*sum[x];
+	return 0;
+}

@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+int mp[60][60];
+int dp[60][60][60][60];
+int main(){  
+    int n,m;
+    cin>>n>>m;
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            cin>>mp[i][j];
+        }
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            for(int ii=1;ii<=n;ii++){
+                for(int jj=1;jj<=m;jj++){
+                    if(i==ii&&jj==j)
+                    continue;
+					if(i+j-ii-jj!=0)
+                   continue;
+                    dp[i][j][ii][jj]=max(max(dp[i-1][j][ii-1][jj],dp[i-1][j][ii][jj-1]),max(dp[i][j-1][ii][jj-1],dp[i][j-1][ii-1][jj]))+mp[i][j]+mp[ii][jj];
+                }
+            }
+        }
+    }
+    cout<<dp[n-1][m][n][m-1];
+    return 0;
+}
