@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int gcd(int a,int b,int &x,int &y){
+	if(b==0){
+		x=1;
+		y=0;
+		return a;
+	}
+		int xx,yy;
+	int d =	gcd(b,a%b,xx,yy);
+			x=yy;
+			y=xx-(a/b)*yy;
+		return d;
+}
+
+int main(){
+	int a,b,x,y;
+	cin >> a >> b;
+	gcd(a,b,x,y);
+	int ans = (x%b+b)%b;
+	cout << ans;
+}
