@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+int sum,n,s;
+int ans;
+int pre[100001],now[100001],son[100001],dist[100001];
+bool pp[50001];
+void tot(int a,int b) {
+pre[++sum]=now[a];
+now[a]=sum;
+son[sum]=b;
+}
+void dfs(int u,int r) {
+pp[u]=1;
+dist[u]=r+1;
+int ans=0,m=0;
+for(int i=now[u]; i; i=pre[i])
+int k=son[i];
+for(int i=now[u]; i; i=pre[i]){
+int k=son[i];
+if(!pp[k])
+dfs(k,r+1);
+}
+}
+int main(){
+int a,b;
+scanf("%d",&n);
+for(int i=1; i<=n-1; i++) {
+scanf("%d%d",&a,&b);
+tot(a,b);
+tot(b,a);
+}
+dfs(1,-1);
+for(int i=1; i<=n; i++){
+printf("%d\n",dist[i]);
+}
+return 0;
+}
